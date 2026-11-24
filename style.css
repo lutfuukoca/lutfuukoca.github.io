@@ -185,3 +185,20 @@ footer {
         transform: none;
     }
 }
+
+/* Gizlilik sayfasına özel ana sayfa butonu */
+.privacy-button {
+    display: inline-block;
+    margin-top: 45px;
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 13px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.privacy-button:hover {
+    background-color: #0369a1;
+    transform: translateY(-3px);
+}
