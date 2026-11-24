@@ -202,3 +202,144 @@ footer {
     background-color: #0369a1;
     transform: translateY(-3px);
 }
+
+/* Blog sayfası */
+.blog-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.blog-controls {
+    display: grid;
+    gap: 18px;
+    margin: 36px 0 28px;
+}
+
+#blogSearch {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 18px;
+    border: 1px solid #456252;
+    border-radius: 12px;
+    background: #1D4033;
+    color: #E5EFE8;
+    font: inherit;
+}
+
+#blogSearch::placeholder {
+    color: #B5C9BC;
+}
+
+#blogSearch:focus {
+    outline: 2px solid #A7D7B5;
+    outline-offset: 2px;
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-filter {
+    padding: 9px 16px;
+    border: 1px solid #456252;
+    border-radius: 999px;
+    background: #1D4033;
+    color: #E5EFE8;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+.category-filter:hover,
+.category-filter.active {
+    border-color: #A7D7B5;
+    background: #A7D7B5;
+    color: #142D25;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    border: 1px solid #345444;
+    border-radius: 16px;
+    background: #1D4033;
+    transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-4px);
+    border-color: #A7D7B5;
+}
+
+.blog-category {
+    margin: 0 0 10px;
+    color: #A7D7B5;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.blog-card h2 {
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    line-height: 1.35;
+}
+
+.blog-card h2 a {
+    color: #E5EFE8;
+    text-decoration: none;
+}
+
+.blog-card h2 a:hover {
+    color: #A7D7B5;
+}
+
+.blog-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+    color: #B5C9BC;
+    font-size: 0.9rem;
+}
+
+.blog-excerpt {
+    color: #D1DED5;
+    line-height: 1.7;
+}
+
+.read-more {
+    margin-top: auto;
+    padding-top: 12px;
+    color: #A7D7B5;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+#noResults {
+    margin-top: 24px;
+    color: #B5C9BC;
+}
+
+@media (max-width: 600px) {
+    .blog-card {
+        padding: 20px;
+    }
+
+    .blog-card h2 {
+        font-size: 1.2rem;
+    }
+}

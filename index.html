@@ -1,84 +1,193 @@
+
+---
+title: Blog
+permalink: /blog/
+---
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lütfü KOCA | Yazılım Mühendisliği Öğrencisi</title>
-    <meta name="description" content="Lütfü Koca, yazılım mühendisliği öğrencisi. Projeler ve iletişim.">
-    <meta name="theme-color" content="#0d2b22">
-
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Lütfü Koca | Yazılım Mühendisliği Öğrencisi">
-    <meta property="og:description" content="Kişisel portfolyo sitesi.">
-
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
-    <link rel="stylesheet" href="style.css">
+    <title>Blog | Lütfü Koca</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
-    <header>
-        <nav class="navbar" aria-label="Ana menü">
-            <a href="#" class="logo" aria-label="Sayfanın başına git">LK.</a>
+<header>
+    <nav class="navbar">
+        <a href="/" class="logo">LK.</a>
 
-            <ul class="nav-links">
-                <li><a href="#about">Hakkımda</a></li>
-                <li><a href="#projects">Projelerim</a></li>
-                <li><a href="#contact">İletişim</a></li>
-            </ul>
-        </nav>
-    </header>
+        <ul class="nav-links">
+            <li><a href="/">Ana Sayfa</a></li>
+            <li><a href="/blog/">Blog</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <main>
-        <section class="hero">
-            <p class="welcome">MERHABA, BEN</p>
+<main class="content-section blog-page">
 
-            <h1>Lütfü Koca</h1>
+    <p class="welcome">YAZILARIM</p>
+    <h1>Blog</h1>
 
-            <p class="subtitle">Yazılım Mühendisliği Öğrencisi</p>
-
-            <p class="description">
-                Teknoloji, yapay zeka ve gömülü sistemlere
-                ilgi duyan bir yazılım mühendisliği öğrencisiyim.
-                Geleceğin teknolojilerini geliştirmek istiyorum.
-            </p>
-
-            <a href="#projects" class="button">Projelerimi Keşfet</a>
-        </section>
-
-        <section id="about" class="content-section">
-            <h2>Hakkımda</h2>
-            <p>
-                Yazılım mühendisliği öğrencisiyim. Teknolojiye olan ilgimle
-                birlikte kendimi geliştirmeye devam ediyorum.
-            </p>
-        </section>
-
-        <section id="projects" class="content-section">
-            <h2>Projelerim</h2>
-            <p>
-                Projelerime
-                <a href="https://github.com/lutfuukoca" target="_blank" rel="noopener noreferrer">GitHub profilimden</a>
-                ulaşabilirsiniz.
-            </p>
-        </section>
-
-        <section id="contact" class="content-section">
-            <h2>İletişim</h2>
-            <p>
-                Bana
-                <a href="mailto:koca_lutfu@hotmail.com">koca_lutfu@hotmail.com</a>
-                adresinden ulaşabilirsiniz.
-            </p>
-        </section>
-    </main>
-
-    <footer>
-        <footer>
-    <p>© 2026 Lütfü Koca. Tüm hakları saklıdır.</p>
     <p>
-        <a href="gizlilik.html">Gizlilik Politikası</a>
+        Yazılım, yapay zeka, teknoloji ve mühendislik üzerine
+        düşüncelerim ve öğrendiklerim.
     </p>
+
+    <div class="blog-controls">
+
+        <input
+            type="search"
+            id="blogSearch"
+            placeholder="Yazılarda ara..."
+            aria-label="Blog yazılarında ara"
+        >
+
+        <div class="category-filters">
+            <button class="category-filter active" data-category="all">
+                Tümü
+            </button>
+
+            {% assign all_categories = site.posts | map: "categories" | join: "|" | split: "|" | uniq | sort %}
+
+            {% for category in all_categories %}
+                <button
+                    class="category-filter"
+                    data-category="{{ category | downcase | escape }}">
+                    {{ category }}
+                </button>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div class="blog-grid" id="blogList">
+
+        {% for post in site.posts %}
+
+        <article
+            class="blog-card"
+            data-categories="{{ post.categories | join: '|' | downcase | escape }}"
+        >
+
+            <p class="blog-category">
+                {{ post.categories | join: " · " }}
+            </p>
+
+            <h2>
+                <a href="{{ post.url | relative_url }}">
+                    {{ post.title }}
+                </a>
+            </h2>
+
+            <div class="blog-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}">
+                    {{ post.date | date: "%d.%m.%Y" }}
+                </time>
+                <span class="reading-time">Hesaplanıyor...</span>
+            </div>
+
+            <p class="blog-excerpt">
+                {{ post.excerpt | strip_html | truncate: 180 }}
+            </p>
+
+            <div class="post-search-content" hidden>
+                {{ post.content | strip_html }}
+            </div>
+
+            <a class="read-more" href="{{ post.url | relative_url }}">
+                Devamını oku →
+            </a>
+
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    <p id="noResults" hidden>
+        Aradığın kriterlere uygun bir yazı bulunamadı.
+    </p>
+
+</main>
+
+<footer>
+    <p>© 2026 Lütfü Koca</p>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("blogSearch");
+    const categoryButtons = document.querySelectorAll(".category-filter");
+    const cards = document.querySelectorAll(".blog-card");
+    const noResults = document.getElementById("noResults");
+
+    let selectedCategory = "all";
+
+    // Okuma süresini hesapla
+    cards.forEach(card => {
+        const content = card.querySelector(".post-search-content");
+        const wordCount = content.textContent.trim()
+            .split(/\s+/)
+            .filter(Boolean).length;
+
+        const minutes = Math.max(1, Math.ceil(wordCount / 200));
+
+        card.querySelector(".reading-time").textContent =
+            minutes + " dakika okuma";
+    });
+
+    // Yazıları filtrele
+    function filterPosts() {
+        const searchTerm = searchInput.value.toLocaleLowerCase("tr");
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const title = card.querySelector("h2").textContent;
+            const content = card.querySelector(".post-search-content").textContent;
+            const categories = card.dataset.categories.split("|");
+
+            const searchableText = (title + " " + content)
+                .toLocaleLowerCase("tr");
+
+            const matchesSearch = searchableText.includes(searchTerm);
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                categories.includes(selectedCategory);
+
+            const isVisible = matchesSearch && matchesCategory;
+
+            card.hidden = !isVisible;
+
+            if (isVisible) visibleCount++;
+        });
+
+        noResults.hidden = visibleCount !== 0;
+    }
+
+    searchInput.addEventListener("input", filterPosts);
+
+    categoryButtons.forEach(button => {
+        button.addEventListener("click", function () {
+
+            selectedCategory = this.dataset.category;
+
+            categoryButtons.forEach(item =>
+                item.classList.remove("active")
+            );
+
+            this.classList.add("active");
+
+            filterPosts();
+        });
+    });
+
+});
+</script>
 
 </body>
 </html>

@@ -1,0 +1,12 @@
+
+title: "Lütfü Koca"
+description: "Yazılım, yapay zeka ve mühendislik üzerine yazılarım."
+url: "https://lutfuukoca.github.io"
+baseurl: ""
+
+markdown: kramdown
+permalink: /blog/:title/
+
+collections:
+  posts:
+    output: true
