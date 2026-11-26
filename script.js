@@ -1,24 +1,19 @@
-/* Tema: kayıtlı tercih yoksa cihazın temasını kullan */
+/* Tema: varsayılan AÇIK (beyaz). Sadece kullanıcı düğmeyle koyuyu seçerse koyu olur. */
 (function () {
     var root = document.documentElement;
     var theme = null;
     try { theme = localStorage.getItem('theme'); } catch (e) {}
-    if (!theme) theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    root.setAttribute('data-theme', theme);
+    root.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+
+    /* Tıklamayı belgeye bağladık: düğme sayfada nerede olursa olsun çalışır */
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest || !e.target.closest('.theme-toggle')) return;
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (err) {}
+    });
 
     document.addEventListener('DOMContentLoaded', function () {
-        var btn = document.querySelector('.theme-toggle');
-        function icon() { btn.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'; }
-        if (btn) {
-            icon();
-            btn.addEventListener('click', function () {
-                var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                root.setAttribute('data-theme', next);
-                try { localStorage.setItem('theme', next); } catch (e) {}
-                icon();
-            });
-        }
-
         /* Yazılar sayfası: arama ve etiket filtresi (etiketler kartlardan otomatik çıkar) */
         var list = document.querySelector('.post-list');
         if (!list) return;
