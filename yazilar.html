@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Yazılarım | Lütfü Koca</title>
+    <meta name="description" content="Lütfü Koca'nın yazıları.">
+</head>
+<body>
+
+    <header class="site-header">
+        <nav class="navbar" aria-label="Ana menü">
+            <a href="index.html" class="logo" aria-label="Ana sayfaya git">LK.</a>
+            <ul class="nav-links">
+                <li class="hide-mobile"><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="yazilar.html" class="nav-writings">Yazılarım</a></li>
+                <li><button class="theme-toggle" type="button" aria-label="Temayı değiştir"></button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-head">
+            <h1>Yazılarım</h1>
+            <p>Teknoloji, yazılım ve öğrendiklerim üzerine yazdıklarım.</p>
+        </div>
+
+        <div class="toolbar">
+            <input type="search" id="search" class="search" placeholder="Yazılarda ara..." aria-label="Yazılarda ara">
+            <div class="tag-filters" role="group" aria-label="Etiket filtresi"></div>
+        </div>
+
+        <!--
+            YENİ YAZI EKLEMEK İÇİN:
+            1) yazi-sablonu.html dosyasını kopyala ve adını değiştir (örn: arduino-ile-baslangic.html)
+            2) Kopyadaki başlığı, tarihi, etiketleri ve metni kendi yazınla değiştir
+            3) Aşağıdaki listeye, EN ÜSTE yeni bir <li class="post-card"> bloğu ekle (en yeni yazı en üstte)
+               data-tags içine etiketleri virgülle yaz; filtre butonları otomatik oluşur
+        -->
+        <ul class="post-list">
+            <li class="post-card" data-tags="Duyuru,Site">
+                <a href="yeni-bir-donem.html">
+                    <h2>Yeni Bir Dönem</h2>
+                    <p class="meta"><time datetime="2026-11-25">25 Kasım 2026</time></p>
+                    <p>Kendi internet sitemin yayına girişi ve kendi yapay zeka uygulamamı geliştirme serüvenim.</p>
+                    <div class="tags"><span class="tag">Duyuru</span><span class="tag">Site</span></div>
+                </a>
+            </li>
+        </ul>
+
+        <p id="empty" class="empty-state" hidden>Aramana uygun yazı bulunamadı.</p>
+    </main>
+
+    <footer>
+        <p>© 2026 Lütfü Koca. Tüm hakları saklıdır.</p>
+        <p><a href="gizlilik.html">Gizlilik Politikası</a></p>
+    </footer>
+
+</body>
+</html>
