@@ -3,17 +3,32 @@
     var root = document.documentElement;
     var theme = null;
     try { theme = localStorage.getItem('theme'); } catch (e) {}
-    root.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    function applyTheme(value) {
+        var dark = value === 'dark';
+        root.setAttribute('data-theme', dark ? 'dark' : 'light');
+        document.querySelectorAll('.theme-toggle').forEach(function (button) {
+            button.setAttribute('aria-pressed', dark ? 'true' : 'false');
+            button.setAttribute('aria-label', dark ? 'Açık moda geç' : 'Koyu moda geç');
+            var label = button.querySelector('.theme-label');
+            var icon = button.querySelector('.theme-icon');
+            if (label) label.textContent = dark ? 'Açık mod' : 'Koyu mod';
+            if (icon) icon.textContent = dark ? '☀' : '☾';
+        });
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute('content', dark ? '#000000' : '#ffffff');
+    }
+    applyTheme(theme);
 
     /* Tıklamayı belgeye bağladık: düğme sayfada nerede olursa olsun çalışır */
     document.addEventListener('click', function (e) {
         if (!e.target.closest || !e.target.closest('.theme-toggle')) return;
         var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
+        applyTheme(next);
         try { localStorage.setItem('theme', next); } catch (err) {}
     });
 
     document.addEventListener('DOMContentLoaded', function () {
+        applyTheme(root.getAttribute('data-theme'));
         /* Yazılar sayfası: arama ve etiket filtresi (etiketler kartlardan otomatik çıkar) */
         var list = document.querySelector('.post-list');
         if (!list) return;
