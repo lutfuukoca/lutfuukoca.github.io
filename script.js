@@ -29,6 +29,26 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         applyTheme(root.getAttribute('data-theme'));
+        /* Bölümleri kaydırırken yumuşakça görünür yap; proje kartlarını sıralı göster. */
+        var revealTargets = [];
+        document.querySelectorAll('main > section .container, .project-card').forEach(function (element) {
+            element.classList.add('scroll-reveal');
+            revealTargets.push(element);
+        });
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            revealTargets.forEach(function (element) { element.classList.add('is-visible'); });
+        } else if ('IntersectionObserver' in window) {
+            var revealObserver = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+            revealTargets.forEach(function (element) { revealObserver.observe(element); });
+        } else {
+            revealTargets.forEach(function (element) { element.classList.add('is-visible'); });
+        }
         /* Ana sayfadaki küçük Java programı demoları */
         var integerPattern = /^[+-]?\d+$/;
         function errorFor(form, field, message) {

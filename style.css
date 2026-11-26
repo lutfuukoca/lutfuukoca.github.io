@@ -130,6 +130,12 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     transition: transform .25s, box-shadow .25s, background-color .3s;
 }
 .project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.scroll-reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.scroll-reveal.is-visible { opacity: 1; transform: translateY(0); }
+.project-card.scroll-reveal { transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background-color .3s; }
+.project-card:nth-child(1) { transition-delay: .04s; }
+.project-card:nth-child(2) { transition-delay: .18s; }
+.project-card:nth-child(3) { transition-delay: .32s; }
 .project-heading { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
 .project-icon {
     display: grid; place-items: center; flex: 0 0 40px; height: 40px; border-radius: 13px;
@@ -240,5 +246,6 @@ footer p + p { margin-top: 4px; }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { transition: none !important; }
+    .scroll-reveal, .scroll-reveal.is-visible { opacity: 1; transform: none; }
     .button:hover, .card:hover, .post-card a:hover, .theme-toggle:hover, .project-card:hover { transform: none; }
 }
