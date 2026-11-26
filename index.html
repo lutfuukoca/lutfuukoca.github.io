@@ -5,8 +5,8 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
-    <link rel="stylesheet" href="style.css?v=theme-toggle-2">
-    <script src="script.js?v=theme-toggle-2"></script>
+    <link rel="stylesheet" href="style.css?v=project-demos-1">
+    <script src="script.js?v=project-demos-1"></script>
     <title>Lütfü Koca | Yazılım Mühendisliği Öğrencisi</title>
     <meta name="description" content="Lütfü Koca, yazılım mühendisliği öğrencisi. Projeler, yazılar ve iletişim.">
     <meta property="og:type" content="website">
@@ -20,6 +20,7 @@
             <a href="#" class="logo" aria-label="Sayfanın başına git">LK.</a>
             <ul class="nav-links">
                 <li class="hide-mobile"><a href="#about">Hakkımda</a></li>
+                <li class="hide-mobile"><a href="#projects">Projelerim</a></li>
                 <li class="hide-mobile"><a href="#interests">İlgi Alanlarım</a></li>
                 <li class="hide-mobile"><a href="#journey">Yolculuk</a></li>
                 <li class="hide-mobile"><a href="#contact">İletişim</a></li>
@@ -53,6 +54,95 @@
                     Yazılım mühendisliği öğrencisiyim. Teknolojiye olan ilgimle birlikte
                     kendimi geliştirmeye devam ediyorum.
                 </p>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Projelerim</h2>
+                <p class="section-intro">Java ile geliştirdiğim küçük programları burada deneyebilirsin.</p>
+
+                <div class="project-grid">
+                    <article class="project-card">
+                        <div class="project-heading">
+                            <span class="project-icon" aria-hidden="true">↗</span>
+                            <div><h3>En Büyük Sayıyı Bul</h3><p>Üç sayı arasındaki en büyüğü bul.</p></div>
+                        </div>
+                        <form class="demo-form" data-demo="largest" novalidate>
+                            <label for="largest-one">İlk sayı</label>
+                            <input id="largest-one" name="first" type="text" inputmode="numeric" autocomplete="off" placeholder="Örn. 12" required>
+                            <p class="field-error" data-error="first" aria-live="polite"></p>
+                            <label for="largest-two">İkinci sayı</label>
+                            <input id="largest-two" name="second" type="text" inputmode="numeric" autocomplete="off" placeholder="Örn. 35" required>
+                            <p class="field-error" data-error="second" aria-live="polite"></p>
+                            <label for="largest-three">Üçüncü sayı</label>
+                            <input id="largest-three" name="third" type="text" inputmode="numeric" autocomplete="off" placeholder="Örn. 8" required>
+                            <p class="field-error" data-error="third" aria-live="polite"></p>
+                            <div class="demo-actions">
+                                <button class="button" type="submit">En büyüğü bul</button>
+                                <button class="button secondary" type="reset">Temizle</button>
+                            </div>
+                            <p class="demo-result" data-result aria-live="polite" hidden></p>
+                        </form>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-heading">
+                            <span class="project-icon" aria-hidden="true">%</span>
+                            <div><h3>Faiz Hesaplama</h3><p>Hedef tutara kaç yılda ulaşacağını hesapla.</p></div>
+                        </div>
+                        <div class="rate-settings">
+                            <p>Geçerli yıllık oran: <strong data-rate-display>%7</strong></p>
+                            <form class="rate-form" data-rate-form novalidate>
+                                <label for="interest-rate">Faiz oranı (%)</label>
+                                <div class="inline-field">
+                                    <input id="interest-rate" name="rate" type="text" inputmode="decimal" value="7" autocomplete="off">
+                                    <button class="button secondary" type="submit">Kaydet</button>
+                                </div>
+                                <p class="field-error" data-rate-error aria-live="polite"></p>
+                                <p class="field-note" data-rate-status aria-live="polite">Oran %7 olarak ayarlı.</p>
+                            </form>
+                        </div>
+                        <form class="demo-form interest-form" data-demo="interest" novalidate>
+                            <label for="interest-start">Başlangıç tutarı (TL)</label>
+                            <input id="interest-start" name="start" type="text" inputmode="decimal" value="1000" autocomplete="off">
+                            <p class="field-error" data-error="start" aria-live="polite"></p>
+                            <label for="interest-target">Hedef tutar (TL)</label>
+                            <input id="interest-target" name="target" type="text" inputmode="decimal" value="2000" autocomplete="off">
+                            <p class="field-error" data-error="target" aria-live="polite"></p>
+                            <div class="demo-actions">
+                                <button class="button" type="submit">Hesapla</button>
+                                <button class="button secondary" type="reset">Sıfırla</button>
+                            </div>
+                            <p class="demo-result" data-result aria-live="polite" hidden></p>
+                            <p class="field-note" data-interest-detail aria-live="polite"></p>
+                        </form>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-heading">
+                            <span class="project-icon" aria-hidden="true">▦</span>
+                            <div><h3>Artık Yıl Kontrolü</h3><p>Bir yılın artık yıl olup olmadığını kontrol et.</p></div>
+                        </div>
+                        <form class="demo-form" data-demo="leap" novalidate>
+                            <label for="leap-year">Yıl</label>
+                            <input id="leap-year" name="year" type="text" inputmode="numeric" autocomplete="off" placeholder="Örn. 2024" required>
+                            <p class="field-error" data-error="year" aria-live="polite"></p>
+                            <div class="demo-actions">
+                                <button class="button" type="submit">Kontrol et</button>
+                                <button class="button secondary" type="reset">Temizle</button>
+                            </div>
+                            <div class="leap-steps" data-leap-steps hidden>
+                                <div class="leap-step"><span>4'e bölünüyor mu?</span><strong data-step="four"></strong></div>
+                                <div class="leap-step"><span>100'e bölünüyor mu?</span><strong data-step="hundred"></strong></div>
+                                <div class="leap-step"><span>400'e bölünüyor mu?</span><strong data-step="four-hundred"></strong></div>
+                            </div>
+                            <p class="demo-result" data-result aria-live="polite" hidden></p>
+                        </form>
+                    </article>
+                </div>
+
+                <p class="projects-link">Projelerimin tümüne <a href="https://github.com/lutfuukoca" target="_blank" rel="noopener noreferrer">GitHub profilimden</a> ulaşabilirsiniz.</p>
             </div>
         </section>
 
@@ -94,17 +184,6 @@
                     </li>
                 </ul>
                 <p style="margin-top:16px"><a href="yazilar.html">Tüm yazıları gör →</a></p>
-            </div>
-        </section>
-
-        <section id="projects" class="section">
-            <div class="container">
-                <h2>Projelerim</h2>
-                <p class="section-intro">
-                    Projelerime
-                    <a href="https://github.com/lutfuukoca" target="_blank" rel="noopener noreferrer">GitHub profilimden</a>
-                    ulaşabilirsiniz.
-                </p>
             </div>
         </section>
 

@@ -29,6 +29,141 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         applyTheme(root.getAttribute('data-theme'));
+        /* Ana sayfadaki küçük Java programı demoları */
+        var integerPattern = /^[+-]?\d+$/;
+        function errorFor(form, field, message) {
+            var target = form.querySelector('[data-error="' + field + '"]');
+            if (target) target.textContent = message || '';
+        }
+        function resultFor(form, message, variant) {
+            var result = form.querySelector('[data-result]');
+            if (!result) return;
+            result.textContent = message || '';
+            result.hidden = !message;
+            result.classList.toggle('is-negative', variant === 'negative');
+        }
+        function readInteger(value) {
+            var clean = value.trim();
+            if (!integerPattern.test(clean)) return null;
+            var number = Number(clean);
+            return Number.isInteger(number) && number >= -2147483648 && number <= 2147483647 ? number : null;
+        }
+        function readPositiveNumber(value) {
+            var clean = value.trim().replace(',', '.');
+            if (!clean) return null;
+            var number = Number(clean);
+            return Number.isFinite(number) && number > 0 ? number : null;
+        }
+        function formatNumber(value, digits) {
+            return value.toLocaleString('tr-TR', { maximumFractionDigits: digits });
+        }
+        document.querySelectorAll('.demo-form').forEach(function (form) {
+            form.addEventListener('reset', function () {
+                window.setTimeout(function () {
+                    form.querySelectorAll('[data-error]').forEach(function (field) { field.textContent = ''; });
+                    resultFor(form, '');
+                    var detail = form.querySelector('[data-interest-detail]');
+                    if (detail) detail.textContent = '';
+                    var steps = form.querySelector('[data-leap-steps]');
+                    if (steps) steps.hidden = true;
+                }, 0);
+            });
+        });
+
+        var largestForm = document.querySelector('[data-demo="largest"]');
+        if (largestForm) largestForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            resultFor(largestForm, '');
+            var values = ['first', 'second', 'third'].map(function (name) {
+                var input = largestForm.elements[name];
+                var number = readInteger(input.value);
+                errorFor(largestForm, name, number === null ? 'Geçerli bir tam sayı girin.' : '');
+                return number;
+            });
+            if (values.some(function (number) { return number === null; })) return;
+            resultFor(largestForm, 'En büyük: ' + Math.max.apply(Math, values));
+        });
+
+        var interestForm = document.querySelector('[data-demo="interest"]');
+        var rateForm = document.querySelector('[data-rate-form]');
+        var annualRate = 7;
+        if (rateForm) {
+            var rateDisplay = document.querySelector('[data-rate-display]');
+            rateForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                var rateInput = rateForm.elements.rate;
+                var rate = readPositiveNumber(rateInput.value);
+                var rateError = rateForm.querySelector('[data-rate-error]');
+                var rateStatus = rateForm.querySelector('[data-rate-status]');
+                if (rate === null) {
+                    rateError.textContent = 'Pozitif bir faiz oranı girin.';
+                    return;
+                }
+                annualRate = rate;
+                rateError.textContent = '';
+                rateDisplay.textContent = '%' + formatNumber(annualRate, 6);
+                rateStatus.textContent = 'Faiz oranı kaydedildi.';
+                if (interestForm) {
+                    resultFor(interestForm, '');
+                    var detail = interestForm.querySelector('[data-interest-detail]');
+                    if (detail) detail.textContent = '';
+                }
+            });
+        }
+        if (interestForm) interestForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            resultFor(interestForm, '');
+            var detail = interestForm.querySelector('[data-interest-detail]');
+            if (detail) detail.textContent = '';
+            var start = readPositiveNumber(interestForm.elements.start.value);
+            var target = readPositiveNumber(interestForm.elements.target.value);
+            errorFor(interestForm, 'start', start === null ? 'Pozitif bir tutar girin.' : '');
+            errorFor(interestForm, 'target', target === null ? 'Pozitif bir tutar girin.' : '');
+            if (start === null || target === null) return;
+
+            var amount = start;
+            var factor = 1 + annualRate / 100;
+            var years = 0;
+            while (amount <= target && years < 10000) {
+                amount *= factor;
+                years++;
+            }
+            if (amount <= target) {
+                errorFor(interestForm, 'target', 'Hedefe 10.000 yılda ulaşılamıyor.');
+                return;
+            }
+            resultFor(interestForm, 'Yıl: ' + years);
+            if (detail) detail.textContent = 'Son tutar: ' + formatNumber(amount, 2) + ' TL';
+        });
+
+        var leapForm = document.querySelector('[data-demo="leap"]');
+        if (leapForm) leapForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            resultFor(leapForm, '');
+            var year = readInteger(leapForm.elements.year.value);
+            errorFor(leapForm, 'year', year === null || year < 1 ? 'Geçerli bir yıl girin (1 veya daha büyük tam sayı).' : '');
+            var steps = leapForm.querySelector('[data-leap-steps]');
+            if (year === null || year < 1) {
+                steps.hidden = true;
+                return;
+            }
+
+            var divisibleBy4 = year % 4 === 0;
+            var divisibleBy100 = divisibleBy4 ? year % 100 === 0 : null;
+            var divisibleBy400 = divisibleBy100 ? year % 400 === 0 : null;
+            var isLeap = divisibleBy4 && (divisibleBy100 === false || divisibleBy400 === true);
+            function showStep(name, value) {
+                var label = steps.querySelector('[data-step="' + name + '"]');
+                label.textContent = value === null ? 'Gerekmedi' : value ? 'Evet' : 'Hayır';
+                label.className = value === null ? 'skip' : value ? 'yes' : 'no';
+            }
+            showStep('four', divisibleBy4);
+            showStep('hundred', divisibleBy100);
+            showStep('four-hundred', divisibleBy400);
+            steps.hidden = false;
+            resultFor(leapForm, year + (isLeap ? ' artık yıldır.' : ' artık yıl değildir.'), isLeap ? '' : 'negative');
+        });
+
         /* Yazılar sayfası: arama ve etiket filtresi (etiketler kartlardan otomatik çıkar) */
         var list = document.querySelector('.post-list');
         if (!list) return;
